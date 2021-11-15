@@ -1,0 +1,17 @@
+{
+  "name": "docs-manifold-master",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}
