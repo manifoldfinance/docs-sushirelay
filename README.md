@@ -62,7 +62,6 @@ current custom rpc methods:
 manifold_sendTransaction   
 ```
 
-
 #### RPC Endpoints
 
 ##### HTTPS
