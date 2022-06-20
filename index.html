@@ -350,7 +350,7 @@
 
 <p>API keys come with pretty high default rate limits, but just contact us if you&#39;re concerned about <a href="#errors">rate limit errors</a>.</p>
 <h2 id='choose-your-networks'>Choose Your Networks</h2>
-<p>To make requests to the Manifold Platform API, you&#39;ll need to choose which Ethereum network you&#39;d like to hit. Right now, we support the Ethereum Mainnet, and the three most popular testnets: Kovan, Rinkeby, and Ropsten.</p>
+<p>To make requests to the Manifold Platform API, you&#39;ll need to choose which Ethereum network you&#39;d like to hit. Right now, we support the Ethereum Mainnet, and Goerli</p>
 <h3 id='development-staging-urls'>Development/Staging URLs</h3>
 <table><thead>
 <tr>
@@ -360,19 +360,11 @@
 </thead><tbody>
 <tr>
 <td>Mainnet</td>
-<td>https://eth.mainnet.manifoldx.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
+<td>https://staging.securerpc.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
 </tr>
 <tr>
-<td>Kovan</td>
-<td>https://eth.kovan.manifoldx.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
-</tr>
-<tr>
-<td>Rinkeby</td>
-<td>https://eth.rinkeby.manifoldx.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
-</tr>
-<tr>
-<td>Ropsten</td>
-<td>https://eth.ropsten.manifoldx.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
+<td>Goerli</td>
+<td>https://staging.goerli.securerpc.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
 </tr>
 </tbody></table>
 <h3 id='production-urls'>Production URLs</h3>
@@ -384,37 +376,28 @@
 </thead><tbody>
 <tr>
 <td>Mainnet</td>
-<td>https://eth.mainnet.manifoldx.com/v1/<span class="prod-api-key"><strong>your_prod_api_key</strong></span></td>
+<td>https://api.securerpc.com/v1/<span class="prod-api-key"><strong>your_prod_api_key</strong></span></td>
 </tr>
 <tr>
-<td>Kovan</td>
-<td>https://eth.kovan.manifoldx.com/v1/<span class="prod-api-key"><strong>your_prod_api_key</strong></span></td>
-</tr>
-<tr>
-<td>Rinkeby</td>
-<td>https://eth.rinkeby.manifoldx.com/v1/<span class="prod-api-key"><strong>your_prod_api_key</strong></span></td>
-</tr>
-<tr>
-<td>Ropsten</td>
-<td>https://eth.ropsten.manifoldx.com/v1/<span class="prod-api-key"><strong>your_prod_api_key</strong></span></td>
+<td>Goerli</td>
+<td>https://staging.goerli.securerpc.com/v1/<span class="dev-api-key"><strong>your_dev_api_key</strong></span></td>
 </tr>
 </tbody></table>
 <h2 id='start-making-requests'>Start Making requests</h2>
 <p>There are three ways to start making requests to Manifold directly.</p>
 <h3 id='with-post-requests'>With POST Requests</h3><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/demo <span class="se">\</span>
+curl https://api.securerpc.com/v1 <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">73</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x09184e72a000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">10000000000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>We recommend interacting with the <code>JSON-RPC</code> via <code>POST</code> requests. Simply pass in the <code>Content-Type: application/json</code> header and your query as the <code>POST</code> body with the following fields:</p>
+<p>We recommend interacting with the <code>JSON-RPC</code> via <code>POST</code> requests. Simply pass in the <code>Content-Type: application/v1/workload</code> header and your query as the <code>POST</code> body with the following fields:</p>
 
 <ul>
 <li><code>jsonrpc</code>: The JSON-RPC version—currently, only <code>2.0</code> is supported.</li>
@@ -432,25 +415,20 @@ curl https://eth.mainnet.manifoldx.com/v1/demo <span class="se">\</span>
 <br/>
 <br/></p>
 <h3 id='with-get-requests'>With GET Requests</h3><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+curl https://api.securerpc.com/v1//eth_gasPrice
+</code></pre></div><h3 id='result-2'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">73</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x09184e72a000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">10000000000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>While we recommend using <code>POST</code> requests, we also offer basic support for <code>GET</code> requests. The response will still be in JSON-RPC format.</p>
-<h3 id='in-your-browser'>In Your Browser</h3>
-<p>Some ETH JSON-RPC endpoints can be viewed in the browser directly. For example:</p>
-
-<p><a href="https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice" title="ETH Gas Price">https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice</a></p>
 <h2 id='configure-your-provider'>Configure Your Provider</h2><h3 id='web3'>Web3</h3><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="c1">// Javascript: web3js</span>
-<span class="nx">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Web3</span><span class="p">(</span><span class="k">new</span> <span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://eth.mainnet.manifoldx.com/v1/your-api-key</span><span class="dl">"</span><span class="p">));</span>
+<span class="nx">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Web3</span><span class="p">(</span><span class="k">new</span> <span class="nx">Web3</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">HttpProvider</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://api.securerpc.com/v1/your-api-key</span><span class="dl">"</span><span class="p">));</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="c1"># Python: web3py
-</span><span class="n">web3</span> <span class="o">=</span> <span class="n">Web3</span><span class="p">(</span><span class="n">HTTPProvider</span><span class="p">(</span><span class="s">"https://eth.mainnet.manifoldx.com/v1/your-api-key"</span><span class="p">))</span>
+</span><span class="n">web3</span> <span class="o">=</span> <span class="n">Web3</span><span class="p">(</span><span class="n">HTTPProvider</span><span class="p">(</span><span class="s">"https://api.securerpc.com/v1/your-api-key"</span><span class="p">))</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">// Java:web3j</span>
-<span class="nc">Web3j</span> <span class="n">web3</span> <span class="o">=</span> <span class="nc">Web3j</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="k">new</span> <span class="nc">HttpService</span><span class="o">(</span><span class="s">"https://eth.mainnet.manifoldx.com/v1/your-api-key"</span><span class="o">));</span>
+<span class="nc">Web3j</span> <span class="n">web3</span> <span class="o">=</span> <span class="nc">Web3j</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="k">new</span> <span class="nc">HttpService</span><span class="o">(</span><span class="s">"https://api.securerpc.com/v1/your-api-key"</span><span class="o">));</span>
 </code></pre></div>
 <p>Using Manifold with Web3 is as simple as a one-line configuration change, regardless of which flavor you use. Simply update the instantiation of the Web3 client to use the Manifold URL of your choice.</p>
 
@@ -467,17 +445,16 @@ curl https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice
 <p><br/>
 <br/>
 <br/></p>
-<h3 id='ethers-js'>Ethers.js</h3><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://eth.mainnet.manifoldx.com/json/your-api-key</span><span class="dl">"</span><span class="p">;</span>
+<h3 id='ethers-js'>Ethers.js</h3><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://api.securerpc.com/v1/workload/your-api-key</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">customHttpProvider</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ethers</span><span class="p">.</span><span class="nx">providers</span><span class="p">.</span><span class="nx">JsonRpcProvider</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
 </code></pre></div>
 <p>Configuring Ethers.js to use Manifold should be a simple change as well. Simply replace your provider with a JSON RPC provider pointing to Manifold.</p>
 <h1 id='manifold-platform-api-reference'>Manifold Platform API Reference</h1><h2 id='eth_blocknumber'>eth_blockNumber</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-3'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">83</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xc94"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">1207</span><span class="w">
@@ -489,13 +466,12 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the current block number the client is on.</p>
 <h2 id='eth_gasprice'>eth_gasPrice</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-4'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">73</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x09184e72a000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">10000000000000</span><span class="w">
@@ -507,12 +483,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-2'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the current gas price in wei.</p>
 <h2 id='eth_getbalance'>eth_getBalance</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getBalance","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f", "latest"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-5'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x0234c8a3397aab58"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">158972490234375000</span><span class="w">
@@ -530,12 +505,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-3'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the current balance in wei.</p>
 <h2 id='eth_getblockbyhash'>eth_getBlockByHash</h2><div class="highlight"><pre class="highlight plaintext"><code># Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-6'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
 </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -592,12 +566,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
 <li><code>uncles</code>: Array - Array of uncle hashes.</li>
 </ul>
 <h2 id='eth_getblockbynumber'>eth_getBlockByNumber</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-7'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
 </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -632,12 +605,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-5'>Returns</h3>
 <p>See <a href="#eth_getblockbyhash"><code>eth_getBlockByHash</code></a></p>
 <h2 id='eth_gettransactionreceipt'>eth_getTransactionReceipt</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1
-</span></code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</span></code></pre></div><h3 id='result-8'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
 </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -687,12 +659,11 @@ Note That the receipt is not available for pending transactions.</p>
 <li><code>status</code>: <code>QUANTITY</code> either 1 (success) or 0 (failure)</li>
 </ul>
 <h2 id='eth_getblocktransactioncountbyhash'>eth_getBlockTransactionCountByHash</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-9'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xc"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">11</span><span class="w">
@@ -711,12 +682,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <li><code>QUANTITY</code> - integer of the number of transactions in this block.</li>
 </ul>
 <h2 id='eth_getblocktransactioncountbynumber'>eth_getBlockTransactionCountByNumber</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-10'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xa"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">10</span><span class="w">
@@ -735,12 +705,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <li><code>QUANTITY</code> - integer of the number of transactions in this block.</li>
 </ul>
 <h2 id='eth_getcode'>eth_getCode</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x2"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-11'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"</span><span class="w">
@@ -762,9 +731,9 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 </ul>
 <h2 id='eth_getlogs'>eth_getLogs</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>
 <span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]}],"id":74}'</span>
 </code></pre></div>
 <p>Returns an array of all logs matching a given filter object.</p>
@@ -796,9 +765,9 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <span class="p">}</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Retrieving the value of pos0 is straight forward:</span>
 <span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}'</span> localhost:8545
 </code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nl">"result"</span><span class="p">:</span><span class="s2">"0x00000000000000000000000000000000000000000000000000000000000004d2"</span><span class="p">}</span><span class="w">
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>// Retrieving an element of the map is harder. The position of an element <span class="k">in </span>the map is calculated with:
@@ -811,9 +780,9 @@ undefined
 <span class="o">&gt;</span> web3.sha3<span class="o">(</span>key, <span class="o">{</span><span class="s2">"encoding"</span>: <span class="s2">"hex"</span><span class="o">})</span>
 <span class="s2">"0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"</span>
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>//Now to fetch the storage:
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}'</span> localhost:8545
 </code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nl">"result"</span><span class="p">:</span><span class="s2">"0x000000000000000000000000000000000000000000000000000000000000162e"</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -829,9 +798,9 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <li><code>DATA</code> - the value at this storage position.</li>
 </ul>
 <h2 id='eth_gettransactionbyblockhashandindex'>eth_getTransactionByBlockHashAndIndex</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'</span>
 </code></pre></div>
 <p>Returns information about a transaction by block hash and transaction index position.</p>
@@ -847,9 +816,9 @@ params: [
 
 <p>Result see eth_getTransactionByHash</p>
 <h2 id='eth_gettransactionbyblocknumberandindex'>eth_getTransactionByBlockNumberAndIndex</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'</span>
 </code></pre></div>
 <p>Result see eth_getTransactionByHash</p>
@@ -865,9 +834,9 @@ params: [
 <h3 id='returns-13'>Returns</h3>
 <p>See eth_getTransactionByHash</p>
 <h2 id='eth_getunclebyblocknumberandindex'>eth_getUncleByBlockNumberAndIndex</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'</span>
 </code></pre></div>
 <p>Returns information about a uncle of a block by number and uncle index position.</p>
@@ -884,9 +853,9 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <p><a href="#eth_getBlockByBash">See eth_getBlockByHash</a>
 Note: An uncle doesn&#39;t contain individual transactions.</p>
 <h2 id='eth_getunclebyblockhashandindex'>eth_getUncleByBlockHashAndIndex</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'</span>
 </code></pre></div>
 <p>Returns information about a uncle of a block by hash and uncle index position.</p>
@@ -903,12 +872,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <p><a href="#eth_getBlockByBash">See eth_getBlockByHash</a>
 Note: An uncle doesn&#39;t contain individual transactions.</p>
 <h2 id='eth_getunclecountbyblockhash'>eth_getUncleCountByBlockHash</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-12'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xc"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">1</span><span class="w">
@@ -925,12 +893,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-16'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the number of uncles in this block.</p>
 <h2 id='eth_getunclecountbyblocknumber'>eth_getUncleCountByBlockNumber</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-13'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">1</span><span class="w">
@@ -945,12 +912,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-17'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the number of uncles in this block.</p>
 <h2 id='eth_protocolversion'>eth_protocolVersion</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-14'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"63"</span><span class="w">
@@ -962,12 +928,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-18'>Returns</h3>
 <p><code>String</code> - The current ethereum protocol version.</p>
 <h2 id='eth_gettransactionbyhash'>eth_getTransactionByHash</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span><span class="s1">'{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-15'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:{</span><span class="w">
@@ -1014,12 +979,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <li><code>s</code>: <code>DATA</code>, 32 Bytes - ECDSA signature s</li>
 </ul>
 <h2 id='eth_gettransactioncount'>eth_getTransactionCount</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f","latest"],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-16'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x1"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">1</span><span class="w">
@@ -1038,12 +1002,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-20'>Returns</h3>
 <p><code>QUANTITY</code> - integer of the number of transactions send from this address.</p>
 <h2 id='eth_call'>eth_call</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_call","params":[{see above}],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-17'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x"</span><span class="w">
@@ -1067,12 +1030,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-21'>Returns</h3>
 <p><code>DATA</code> - the return value of executed contract.</p>
 <h2 id='eth_estimategas'>eth_estimateGas</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_estimateGas","params":[{see above}],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-18'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x5208"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">21000</span><span class="w">
@@ -1084,12 +1046,11 @@ curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
 <h3 id='returns-22'>Returns</h3>
 <p>QUANTITY - the amount of gas used.</p>
 <h2 id='eth_sendrawtransaction'>eth_sendRawTransaction</h2><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Request</span>
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key <span class="se">\</span>
+curl https://api.securerpc.com/v1/your-api-key <span class="se">\</span>
 <span class="nt">-X</span> POST <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s2">"Content-Type: application/v1/workload"</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":[{see above}],"id":1}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Result</span><span class="w">
-</span><span class="p">{</span><span class="w">
+</code></pre></div><h3 id='result-19'>Result</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"</span><span class="w">
