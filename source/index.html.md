@@ -40,23 +40,19 @@ API keys come with pretty high default rate limits, but just contact us if you'r
 
 ## Choose Your Networks
 
-To make requests to the Manifold Platform API, you'll need to choose which Ethereum network you'd like to hit. Right now, we support the Ethereum Mainnet, and the three most popular testnets: Kovan, Rinkeby, and Ropsten.
+To make requests to the Manifold Platform API, you'll need to choose which Ethereum network you'd like to hit. Right now, we support the Ethereum Mainnet, and Goerli
 
 ### Development/Staging URLs
 Network | URL |
 -------------- | -------------- |
-Mainnet | https://eth.mainnet.manifoldx.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
-Kovan | https://eth.kovan.manifoldx.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
-Rinkeby | https://eth.rinkeby.manifoldx.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
-Ropsten | https://eth.ropsten.manifoldx.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
+Mainnet | https://staging.securerpc.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
+Goerli | https://staging.goerli.securerpc.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
 
 ### Production URLs
 Network | URL |
 -------------- | -------------- |
-Mainnet | https://eth.mainnet.manifoldx.com/v1/<span class="prod-api-key">**your_prod_api_key**</span>
-Kovan | https://eth.kovan.manifoldx.com/v1/<span class="prod-api-key">**your_prod_api_key**</span>
-Rinkeby | https://eth.rinkeby.manifoldx.com/v1/<span class="prod-api-key">**your_prod_api_key**</span>
-Ropsten | https://eth.ropsten.manifoldx.com/v1/<span class="prod-api-key">**your_prod_api_key**</span>
+Mainnet | https://api.securerpc.com/v1/<span class="prod-api-key">**your_prod_api_key**</span>
+Goerli | https://staging.goerli.securerpc.com/v1/<span class="dev-api-key">**your_dev_api_key**</span>
 
 ## Start Making requests
 There are three ways to start making requests to Manifold directly.
@@ -65,15 +61,15 @@ There are three ways to start making requests to Manifold directly.
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/demo \
+curl https://api.securerpc.com/v1 \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
 
 ```
 
+### Result
 ```json
-// Result
 {
   "id": 73,
   "jsonrpc": "2.0",
@@ -81,7 +77,7 @@ curl https://eth.mainnet.manifoldx.com/v1/demo \
 }
 ```
 
-We recommend interacting with the `JSON-RPC` via `POST` requests. Simply pass in the `Content-Type: application/json` header and your query as the `POST` body with the following fields:
+We recommend interacting with the `JSON-RPC` via `POST` requests. Simply pass in the `Content-Type: application/v1/workload` header and your query as the `POST` body with the following fields:
 
   - `jsonrpc`: The JSON-RPC version—currently, only `2.0` is supported.
   - `method`: The ETH API method. [See the API reference below](#manifold-api-reference).
@@ -102,11 +98,11 @@ We recommend interacting with the `JSON-RPC` via `POST` requests. Simply pass in
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice
+curl https://api.securerpc.com/v1//eth_gasPrice
 ```
 
+### Result
 ```json
-// Result
 {
   "id": 73,
   "jsonrpc": "2.0",
@@ -117,27 +113,21 @@ curl https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice
 While we recommend using `POST` requests, we also offer basic support for `GET` requests. The response will still be in JSON-RPC format.
 
 
-### In Your Browser
-Some ETH JSON-RPC endpoints can be viewed in the browser directly. For example:
-
-[https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice](https://eth.mainnet.manifoldx.com/sandbox//eth_gasPrice "ETH Gas Price")
-
-
 ## Configure Your Provider
 
 ### Web3
 
 ```javascript
 // Javascript: web3js
-web3 = new Web3(new Web3.providers.HttpProvider("https://eth.mainnet.manifoldx.com/v1/your-api-key"));
+web3 = new Web3(new Web3.providers.HttpProvider("https://api.securerpc.com/v1/your-api-key"));
 ```
 ```python 
 # Python: web3py
-web3 = Web3(HTTPProvider("https://eth.mainnet.manifoldx.com/v1/your-api-key"))
+web3 = Web3(HTTPProvider("https://api.securerpc.com/v1/your-api-key"))
 ```
 ```java 
 // Java:web3j
-Web3j web3 = Web3j.build(new HttpService("https://eth.mainnet.manifoldx.com/v1/your-api-key"));
+Web3j web3 = Web3j.build(new HttpService("https://api.securerpc.com/v1/your-api-key"));
 ```
 
 Using Manifold with Web3 is as simple as a one-line configuration change, regardless of which flavor you use. Simply update the instantiation of the Web3 client to use the Manifold URL of your choice.
@@ -157,7 +147,7 @@ See the official docs:
 ### Ethers.js
 
 ```javascript
-let url = "https://eth.mainnet.manifoldx.com/json/your-api-key";
+let url = "https://api.securerpc.com/v1/workload/your-api-key";
 let customHttpProvider = new ethers.providers.JsonRpcProvider(url);
 ```
 
@@ -171,14 +161,14 @@ Configuring Ethers.js to use Manifold should be a simple change as well. Simply 
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":83,
   "jsonrpc": "2.0",
@@ -196,15 +186,15 @@ none
 ## eth_gasPrice
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73}'
 
 ```
 
+### Result
 ```json
-// Result
 {
   "id":73,
   "jsonrpc": "2.0",
@@ -221,14 +211,14 @@ none
 ## eth_getBalance
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f", "latest"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -251,14 +241,14 @@ Returns the balance of the account of given address.
 
 ```curl
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331", true],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
 "id":1,
 "jsonrpc":"2.0",
@@ -318,14 +308,14 @@ Returns information about a block by hash.
 ## eth_getBlockByNumber
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
 "id":1,
 "jsonrpc":"2.0",
@@ -366,14 +356,14 @@ See [`eth_getBlockByHash`](#eth_getblockbyhash)
 ## eth_getTransactionReceipt
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xb903239f8543d04b5dc1ba6579132b143087c68db1
 ```
 
+### Result
 ```json
-// Result
 {
 "id":1,
 "jsonrpc":"2.0",
@@ -427,14 +417,14 @@ It also returns either:
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByHash","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -457,14 +447,14 @@ Returns the number of transactions in a block from a block matching the given bl
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getBlockTransactionCountByNumber","params":["0xe8"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -487,14 +477,14 @@ Returns the number of transactions in a block matching the given block number.
 ## eth_getCode
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getCode","params":["0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x2"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -519,9 +509,9 @@ Returns code at a given address.
 ```shell
 
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"topics":["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b"]}],"id":74}'
 ```
 
@@ -560,9 +550,9 @@ contract Storage {
 ```shell
 # Retrieving the value of pos0 is straight forward:
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}' localhost:8545
 ```
 
@@ -584,9 +574,9 @@ undefined
 
 ```shell
 //Now to fetch the storage:
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
 ```
 
@@ -609,9 +599,9 @@ Returns the value from a storage position at a given address.
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
 ```
 
@@ -631,9 +621,9 @@ Result see eth_getTransactionByHash
 ## eth_getTransactionByBlockNumberAndIndex
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getTransactionByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
 Result see eth_getTransactionByHash
@@ -654,9 +644,9 @@ See eth_getTransactionByHash
 ## eth_getUncleByBlockNumberAndIndex
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getUncleByBlockNumberAndIndex","params":["0x29c", "0x0"],"id":1}'
 ```
 
@@ -677,9 +667,9 @@ Note: An uncle doesn't contain individual transactions.
 ## eth_getUncleByBlockHashAndIndex
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getUncleByBlockHashAndIndex","params":["0xc6ef2fc5426d6ad6fd9e2a26abeab0aa2411b7ab17f30a99d3cb96aed1d1055b", "0x0"],"id":1}'
 ```
 
@@ -703,14 +693,14 @@ Note: An uncle doesn't contain individual transactions.
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockHash","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -733,14 +723,14 @@ Returns the number of uncles in a block from a block matching the given block ha
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getUncleCountByBlockNumber","params":["0xe8"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -761,14 +751,14 @@ Returns the number of uncles in a block from a block matching the give block num
 
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_protocolVersion","params":[],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -786,14 +776,14 @@ none
 ## eth_getTransactionByHash
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d'{"jsonrpc":"2.0","method":"eth_getTransactionByHash","params":["0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "jsonrpc":"2.0",
   "id":1,
@@ -843,14 +833,14 @@ Returns the information about a transaction requested by transaction hash.
 ## eth_getTransactionCount
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_getTransactionCount","params":["0xc94770007dda54cF92009BFF0dE90c06F603a09f","latest"],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -873,14 +863,14 @@ Returns the number of transactions sent from an address.
 ## eth_call
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_call","params":[{see above}],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -905,14 +895,14 @@ Executes a new message call immediately without creating a transaction on the bl
 ## eth_estimateGas
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_estimateGas","params":[{see above}],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -931,14 +921,14 @@ QUANTITY - the amount of gas used.
 ## eth_sendRawTransaction
 ```shell
 # Request
-curl https://eth.mainnet.manifoldx.com/v1/your-api-key \
+curl https://api.securerpc.com/v1/your-api-key \
 -X POST \
--H "Content-Type: application/json" \
+-H "Content-Type: application/v1/workload" \
 -d '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":[{see above}],"id":1}'
 ```
 
+### Result
 ```json
-// Result
 {
   "id":1,
   "jsonrpc": "2.0",
@@ -952,5 +942,4 @@ Creates new message call transaction or a contract creation for signed transacti
 ### Returns
 `DATA`, 32 Bytes - the transaction hash, or the zero hash if the transaction is not yet available.
 Use eth_getTransactionReceipt to get the contract address, after the transaction was mined, when you created a contract.
-
 
